@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { usePost } from "@/hooks/apiHooks/usePost"
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { SERVER_LINKS } from "@/shared/link/SERVER_LINKS"
 
 const weightageTypes = ["KG", "GR", "UNITS"] as const
@@ -62,7 +62,7 @@ const RecipeForm:React.FC<{userID:number}> = ({userID}) => {
         item.typeOfWeightage
 
       if (!valid) {
-        alert(`Be sure that everything are correct`)
+        alert(`Be sure that everything are filled`)
       }
 
       return valid
@@ -185,11 +185,14 @@ const RecipeForm:React.FC<{userID:number}> = ({userID}) => {
 
 const RecipeCreateForm:React.FC<{userID:number}> = ({userID}) => {
   return(
-          <Dialog>
+      <Dialog>
         <DialogTrigger>
           <div className="cursor-pointer active:scale-95 border border-black rounded-2xl p-2 bg-black text-white hover:underline">Create recipe</div>
         </DialogTrigger>
         <DialogContent>
+          <DialogTitle>
+            Create Recipe
+          </DialogTitle>
           <RecipeForm userID={userID}/>
         </DialogContent>
       </Dialog>

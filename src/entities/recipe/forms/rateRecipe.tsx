@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/select";
 import { usePost } from "@/hooks/apiHooks/usePost";
 import { SERVER_LINKS } from "@/shared/link/SERVER_LINKS";
+import { useEffect, useState } from "react";
 
 const RateRecipe: React.FC<{ userID: number; recipeID: number; rating?: number }> = ({
   userID,
@@ -15,10 +16,16 @@ const RateRecipe: React.FC<{ userID: number; recipeID: number; rating?: number }
 }) => {
   const allowedRatings = [1, 2, 3, 4, 5];
 
-  const {postData } = usePost(SERVER_LINKS.RECIPE.RATE);
+  const {postData} = usePost(SERVER_LINKS.RECIPE.RATE);
+  const [localRating,setLocalRating] = useState<string>()
+
+  useEffect(() => {
+    setLocalRating(rating?.toString())
+  },[rating])
 
   const onSelect = (value: string) => {
     const numericRating = parseInt(value);
+    setLocalRating(value)
     postData({ userID, recipeID, rating: numericRating });
   };
 
@@ -27,7 +34,7 @@ const RateRecipe: React.FC<{ userID: number; recipeID: number; rating?: number }
       <span>Choose rating:</span>
       <Select
         onValueChange={onSelect}
-        defaultValue={rating ? rating.toString() : undefined}
+        value={localRating}
       >
         <SelectTrigger className="w-[100px]">
           <SelectValue placeholder="Rating" />
